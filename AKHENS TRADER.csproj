@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Basic Configuration -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>AKHENS_TRADER</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    
+    <!-- Assembly Information -->
+    <AssemblyTitle>Prop Strategy Builder</AssemblyTitle>
+    <Product>Prop Strategy Builder</Product>
+    <Description>Visual MT5 Expert Advisor Strategy Generator for Prop Traders</Description>
+    <Company>FuglyMan TokenArena</Company>
+    <Copyright>Copyright © 2026 FuglyMan TokenArena</Copyright>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    
+    <!-- Optional: Add application icon (uncomment if you have icon.ico in root) -->
+    <!-- <ApplicationIcon>icon.ico</ApplicationIcon> -->
+  </PropertyGroup>
+
+  <!-- Publishing Configuration (only active during publish) -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(IsPublish)' == 'true'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>false</PublishTrimmed>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
+    <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+  </ItemGroup>
+
+</Project>
