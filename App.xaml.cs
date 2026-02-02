@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Windows;
 
-namespace AKHENS_TRADER
+namespace AkhenTraderElite
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -14,7 +14,7 @@ namespace AKHENS_TRADER
     {
         private static readonly string LogFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "AKHENS_TRADER",
+            "AkhenTraderElite",
             "logs",
             "startup.log");
 

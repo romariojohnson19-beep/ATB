@@ -4,30 +4,28 @@
     <!-- Basic Configuration -->
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <RootNamespace>AKHENS_TRADER</RootNamespace>
+    <RootNamespace>AkhenTraderElite</RootNamespace>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     
     <!-- Assembly Information -->
-    <AssemblyTitle>Prop Strategy Builder</AssemblyTitle>
-    <Product>Prop Strategy Builder</Product>
-    <Description>Visual MT5 Expert Advisor Strategy Generator for Prop Traders</Description>
+    <AssemblyTitle>Akhen Trader Elite</AssemblyTitle>
+    <Product>Akhen Trader Elite</Product>
+    <Description>Elite EA Controller &amp; Strategy Launcher for Prop Traders - Real-time MT5 Control with Advanced Strategy Library</Description>
     <Company>FuglyMan TokenArena</Company>
-    <Copyright>Copyright © 2026 FuglyMan TokenArena</Copyright>
-    <Version>1.0.0</Version>
-    <FileVersion>1.0.0.0</FileVersion>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Copyright>Copyright © 2026 FuglyMan TokenArena - Akhen Trader Elite</Copyright>
+    <Version>2.0.0</Version>
+    <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     
     <!-- Optional: Add application icon (uncomment if you have icon.ico in root) -->
     <!-- <ApplicationIcon>icon.ico</ApplicationIcon> -->
   </PropertyGroup>
 
   <!-- Publishing Configuration (only active during publish) -->
-  <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(IsPublish)' == 'true'">
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <SelfContained>true</SelfContained>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>false</PublishTrimmed>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>

@@ -4,10 +4,10 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MaterialDesignThemes.Wpf;
-using AKHENS_TRADER.Models;
-using AKHENS_TRADER.Services;
+using AkhenTraderElite.Models;
+using AkhenTraderElite.Services;
 
-namespace AKHENS_TRADER.ViewModels
+namespace AkhenTraderElite.ViewModels
 {
     /// <summary>
     /// Main ViewModel for the Prop Strategy Builder application
@@ -82,6 +82,12 @@ namespace AKHENS_TRADER.ViewModels
         /// </summary>
         [ObservableProperty]
         private bool isGenerating;
+
+        /// <summary>
+        /// Selected tab index for auto-switching to Custom Builder
+        /// </summary>
+        [ObservableProperty]
+        private int selectedTabIndex = 0;
 
         /// <summary>
         /// Snackbar message queue for notifications
@@ -387,6 +393,9 @@ namespace AKHENS_TRADER.ViewModels
                 // Notify success
                 SnackbarMessageQueue.Enqueue($"? Loaded: {strategyInfo.Name}");
                 StatusMessage = $"Loaded preloaded strategy: {strategyInfo.Name}";
+
+                // Auto-switch to Custom Builder tab (index 1)
+                SelectedTabIndex = 1;
 
                 // Trigger regeneration
                 GenerateStrategy();

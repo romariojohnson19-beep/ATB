@@ -1,6 +1,6 @@
-using AKHENS_TRADER.Models;
+using AkhenTraderElite.Models;
 
-namespace AKHENS_TRADER.Services
+namespace AkhenTraderElite.Services
 {
     /// <summary>
     /// Service responsible for managing prop firm presets and configurations

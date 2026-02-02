@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using AKHENS_TRADER.Models;
+using AkhenTraderElite.Models;
 
-namespace AKHENS_TRADER.ViewModels
+namespace AkhenTraderElite.ViewModels
 {
     /// <summary>
     /// ViewModel for the Custom Strategy Builder tab

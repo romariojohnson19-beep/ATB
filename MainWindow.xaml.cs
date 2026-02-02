@@ -8,10 +8,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AKHENS_TRADER.ViewModels;
-using AKHENS_TRADER.Views;
+using AkhenTraderElite.ViewModels;
+using AkhenTraderElite.Views;
 
-namespace AKHENS_TRADER
+namespace AkhenTraderElite
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

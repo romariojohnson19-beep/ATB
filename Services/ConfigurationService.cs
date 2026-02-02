@@ -3,9 +3,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Win32;
 using MaterialDesignThemes.Wpf;
-using AKHENS_TRADER.Models;
+using AkhenTraderElite.Models;
 
-namespace AKHENS_TRADER.Services
+namespace AkhenTraderElite.Services
 {
     /// <summary>
     /// Service for saving and loading strategy configurations as JSON

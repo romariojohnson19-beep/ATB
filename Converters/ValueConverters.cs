@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace AKHENS_TRADER.Converters
+namespace AkhenTraderElite.Converters
 {
     /// <summary>
     /// Converts enum type to collection for ComboBox binding

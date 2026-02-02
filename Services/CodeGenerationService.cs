@@ -1,8 +1,8 @@
 using System.Collections.ObjectModel;
 using System.Text;
-using AKHENS_TRADER.Models;
+using AkhenTraderElite.Models;
 
-namespace AKHENS_TRADER.Services
+namespace AkhenTraderElite.Services
 {
     /// <summary>
     /// Service responsible for generating MQL5 Expert Advisor code
@@ -416,6 +416,14 @@ namespace AKHENS_TRADER.Services
                     case IndicatorType.ATR:
                         sb.AppendLine($"    double {condVar}_value = iATR(_Symbol, {timeframe}, {condition.Period});");
                         sb.AppendLine($"    bool {condVar} = {condVar}_value {GetOperatorSymbol(condition.Operator)} {condition.Level};");
+                        break;
+                        
+                    case IndicatorType.ADX:
+                        sb.AppendLine($"    double {condVar}_adx[];");
+                        sb.AppendLine($"    ArraySetAsSeries({condVar}_adx, true);");
+                        sb.AppendLine($"    int {condVar}_handle = iADX(_Symbol, {timeframe}, {condition.Period});");
+                        sb.AppendLine($"    CopyBuffer({condVar}_handle, 0, 0, 1, {condVar}_adx);");
+                        sb.AppendLine($"    bool {condVar} = {condVar}_adx[0] {GetOperatorSymbol(condition.Operator)} {condition.Level};");
                         break;
                 }
 

@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace AKHENS_TRADER.Views
+namespace AkhenTraderElite.Views
 {
     /// <summary>
     /// Interaction logic for AboutWindow.xaml

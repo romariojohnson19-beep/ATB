@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace AKHENS_TRADER.Models
+namespace AkhenTraderElite.Models
 {
     /// <summary>
     /// Indicator type enumeration
@@ -18,7 +18,34 @@ namespace AKHENS_TRADER.Models
         BollingerBands,
         Stochastic,
         ATR,
-        CCI
+        CCI,
+        ADX  // Added for Price Action Rejection strategy
+    }
+
+    /// <summary>
+    /// Strategy difficulty level
+    /// </summary>
+    public enum DifficultyLevel
+    {
+        Beginner,
+        Intermediate,
+        Advanced,
+        Expert
+    }
+
+    /// <summary>
+    /// Strategy category
+    /// </summary>
+    public enum StrategyCategory
+    {
+        TrendFollowing,
+        MeanReversion,
+        Momentum,
+        Volatility,
+        Breakout,
+        Arbitrage,
+        PriceAction,
+        Confirmation
     }
 
     /// <summary>
@@ -207,4 +234,6 @@ namespace AKHENS_TRADER.Models
         public bool UseNewsFilter { get; set; }
     }
 }
+
+
 

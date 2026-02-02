@@ -1,13 +1,13 @@
-<UserControl x:Class="AKHENS_TRADER.Views.IndicatorConditionControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:local="clr-namespace:AKHENS_TRADER.Views"
-             xmlns:models="clr-namespace:AKHENS_TRADER.Models"
-             mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="700">
+<UserControl x:Class="AkhenTraderElite.Views.IndicatorConditionControl"
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+xmlns:local="clr-namespace:AkhenTraderElite.Views"
+xmlns:models="clr-namespace:AkhenTraderElite.Models"
+mc:Ignorable="d" 
+d:DesignHeight="120" d:DesignWidth="700">
     
     <materialDesign:Card Padding="15" Margin="0,0,0,10">
         <Grid>

@@ -2,9 +2,9 @@ using System.IO;
 using System.Text;
 using Microsoft.Win32;
 using MaterialDesignThemes.Wpf;
-using AKHENS_TRADER.Models;
+using AkhenTraderElite.Models;
 
-namespace AKHENS_TRADER.Services
+namespace AkhenTraderElite.Services
 {
     /// <summary>
     /// Service responsible for exporting generated code and strategy files

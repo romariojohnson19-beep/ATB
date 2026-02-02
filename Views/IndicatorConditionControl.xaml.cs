@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace AKHENS_TRADER.Views
+namespace AkhenTraderElite.Views
 {
     /// <summary>
     /// Interaction logic for IndicatorConditionControl.xaml
