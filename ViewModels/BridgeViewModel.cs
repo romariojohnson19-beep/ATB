@@ -114,15 +114,33 @@ namespace AkhenTraderElite.ViewModels
                     ConnectionStatus = $"Listening on port {BridgePort}...";
                     StatusMessage = $"Bridge server started on port {BridgePort}. Waiting for EA connection...";
                     _connectionCheckTimer?.Start();
+                    
+                    MessageBox.Show(
+                        $"Bridge server started successfully!\n\nListening on: http://127.0.0.1:{BridgePort}\n\nNow attach the Bridge EA to an MT5 chart.",
+                        "Server Started",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
                 }
                 else
                 {
                     StatusMessage = "Failed to start bridge server. Check if port is already in use.";
+                    
+                    MessageBox.Show(
+                        $"Failed to start bridge server!\n\nPort {BridgePort} may already be in use.\n\nTry:\n1. Close other apps using port {BridgePort}\n2. Change the port number\n3. Restart this app",
+                        "Server Start Failed",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
                 StatusMessage = $"Error: {ex.Message}";
+                
+                MessageBox.Show(
+                    $"Error starting bridge server:\n\n{ex.Message}\n\nStack trace:\n{ex.StackTrace}",
+                    "Server Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
 
