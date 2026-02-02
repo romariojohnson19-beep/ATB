@@ -703,8 +703,9 @@ TextOptions.TextRenderingMode="Auto">
                 </Grid>
             </TabItem>
 
-            <!-- Tab 5: EA Control (Coming Soon) -->
-            <TabItem Header="EA Control">
+
+            <!-- Tab 5: EA Control - HTTP Bridge Testing -->
+            <TabItem Header="EA Control" DataContext="{Binding BridgeViewModel}">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -722,128 +723,279 @@ TextOptions.TextRenderingMode="Auto">
                 
                 <Grid>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
-                        <StackPanel MaxWidth="800">
-                            <!-- EA Status Card -->
+                        <StackPanel MaxWidth="1000">
+                            <!-- Bridge Server Control Card -->
                             <materialDesign:Card Padding="20" Margin="0,0,0,15"
                                                materialDesign:ElevationAssist.Elevation="Dp2">
                                 <StackPanel>
-                                    <TextBlock Text="EA Bridge Status" 
+                                    <TextBlock Text="Bridge Server Control" 
                                               FontSize="20" 
                                               FontWeight="SemiBold"
                                               Margin="0,0,0,15"/>
                                     
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                                        <materialDesign:PackIcon Kind="CircleOutline" 
-                                                                Foreground="Red"
-                                                                Width="20"
-                                                                Height="20"
-                                                                VerticalAlignment="Center"
-                                                                Margin="0,0,10,0"/>
-                                        <TextBlock Text="Status: Disconnected" 
-                                                  FontSize="16"
-                                                  VerticalAlignment="Center"
-                                                  FontWeight="Medium"/>
-                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <!-- Status Indicator -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                                            <materialDesign:PackIcon Kind="Circle" 
+                                                                    Width="16"
+                                                                    Height="16"
+                                                                    VerticalAlignment="Center"
+                                                                    Margin="0,0,10,0">
+                                                <materialDesign:PackIcon.Style>
+                                                    <Style TargetType="materialDesign:PackIcon">
+                                                        <Setter Property="Foreground" Value="Red"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsBridgeRunning}" Value="True">
+                                                                <Setter Property="Foreground" Value="Orange"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                                <Setter Property="Foreground" Value="Green"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </materialDesign:PackIcon.Style>
+                                            </materialDesign:PackIcon>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding ConnectionStatus}" 
+                                                          FontSize="16"
+                                                          FontWeight="Medium"/>
+                                                <TextBlock Text="{Binding StatusMessage}" 
+                                                          FontSize="12"
+                                                          Opacity="0.7"
+                                                          Margin="0,5,0,0"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        
+                                        <!-- Control Buttons -->
+                                        <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                            <Button Content="START SERVER"
+                                                   Command="{Binding StartBridgeCommand}"
+                                                   Margin="0,0,10,0">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsBridgeRunning}" Value="True">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                            <Button Content="STOP SERVER"
+                                                   Command="{Binding StopBridgeCommand}">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsBridgeRunning}" Value="False">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
                                     
-                                    <TextBlock Text="Connect to MetaTrader 5 bridge EA to enable live trading control."
-                                              TextWrapping="Wrap"
-                                              Opacity="0.7"
-                                              FontSize="14"
-                                              Margin="0,0,0,20"/>
+                                    <!-- Connection Info -->
+                                    <Border Background="{DynamicResource MaterialDesignDivider}"
+                                           Height="1"
+                                           Margin="0,15,0,15"/>
                                     
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button Content="CONNECT TO EA"
-                                               Style="{StaticResource MaterialDesignRaisedButton}"
-                                               IsEnabled="False"
-                                               Margin="0,0,10,0"
-                                               ToolTip="Coming soon - requires bridge EA in MT5"/>
-                                        <Button Content="START TRADING"
-                                               Style="{StaticResource MaterialDesignRaisedButton}"
-                                               IsEnabled="False"
-                                               Margin="0,0,10,0"
-                                               ToolTip="Connect to EA first"/>
-                                        <Button Content="STOP TRADING"
-                                               Style="{StaticResource MaterialDesignOutlinedButton}"
-                                               IsEnabled="False"
-                                               ToolTip="Connect to EA first"/>
-                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="EA Name" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock Text="{Binding EaName}" FontWeight="Medium" FontSize="14"/>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="EA Version" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock Text="{Binding EaVersion}" FontWeight="Medium" FontSize="14"/>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Last Heartbeat" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock Text="{Binding LastHeartbeat}" FontWeight="Medium" FontSize="14"/>
+                                        </StackPanel>
+                                    </Grid>
                                 </StackPanel>
                             </materialDesign:Card>
                             
-                            <!-- Coming Soon Features Card -->
+                            <!-- Account Info Card -->
+                            <materialDesign:Card Padding="20" Margin="0,0,0,15"
+                                               materialDesign:ElevationAssist.Elevation="Dp2">
+                                <StackPanel>
+                                    <TextBlock Text="Account Information" 
+                                              FontSize="18" 
+                                              FontWeight="SemiBold"
+                                              Margin="0,0,0,15"/>
+                                    
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <!-- Balance -->
+                                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,15">
+                                            <TextBlock Text="Balance" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock FontWeight="Medium" FontSize="18">
+                                                <Run Text="$"/><Run Text="{Binding Balance, StringFormat=N2}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        
+                                        <!-- Equity -->
+                                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,15">
+                                            <TextBlock Text="Equity" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock FontWeight="Medium" FontSize="18">
+                                                <Run Text="$"/><Run Text="{Binding Equity, StringFormat=N2}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        
+                                        <!-- Margin -->
+                                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,15">
+                                            <TextBlock Text="Margin Used" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock FontWeight="Medium" FontSize="18">
+                                                <Run Text="$"/><Run Text="{Binding Margin, StringFormat=N2}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        
+                                        <!-- Daily DD -->
+                                        <StackPanel Grid.Row="1" Grid.Column="0">
+                                            <TextBlock Text="Daily Drawdown" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock FontWeight="Medium" FontSize="16">
+                                                <Run Text="{Binding DailyDrawdown, StringFormat=N2}"/><Run Text="%"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        
+                                        <!-- Total DD -->
+                                        <StackPanel Grid.Row="1" Grid.Column="1">
+                                            <TextBlock Text="Total Drawdown" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock FontWeight="Medium" FontSize="16">
+                                                <Run Text="{Binding TotalDrawdown, StringFormat=N2}"/><Run Text="%"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        
+                                        <!-- Open Positions -->
+                                        <StackPanel Grid.Row="1" Grid.Column="2">
+                                            <TextBlock Text="Open Positions" Opacity="0.7" FontSize="12"/>
+                                            <TextBlock Text="{Binding OpenPositionCount}" FontWeight="Medium" FontSize="16"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </materialDesign:Card>
+                            
+                            <!-- Live Positions Card -->
+                            <materialDesign:Card Padding="20" Margin="0,0,0,15"
+                                               materialDesign:ElevationAssist.Elevation="Dp2">
+                                <StackPanel>
+                                    <TextBlock Text="Live Positions" 
+                                              FontSize="18" 
+                                              FontWeight="SemiBold"
+                                              Margin="0,0,0,15"/>
+                                    
+                                    <DataGrid ItemsSource="{Binding Positions}"
+                                             AutoGenerateColumns="False"
+                                             IsReadOnly="True"
+                                             CanUserSortColumns="True"
+                                             Height="250"
+                                             materialDesign:DataGridAssist.CellPadding="8">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Ticket" Binding="{Binding Ticket}" Width="Auto"/>
+                                            <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto"/>
+                                            <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="Auto"/>
+                                            <DataGridTextColumn Header="Lots" Binding="{Binding Lots, StringFormat=N2}" Width="Auto"/>
+                                            <DataGridTextColumn Header="Open" Binding="{Binding OpenPrice, StringFormat=N5}" Width="Auto"/>
+                                            <DataGridTextColumn Header="Current" Binding="{Binding CurrentPrice, StringFormat=N5}" Width="Auto"/>
+                                            <DataGridTextColumn Header="SL" Binding="{Binding StopLoss, StringFormat=N5}" Width="Auto"/>
+                                            <DataGridTextColumn Header="TP" Binding="{Binding TakeProfit, StringFormat=N5}" Width="Auto"/>
+                                            <DataGridTextColumn Header="Profit" Binding="{Binding Profit, StringFormat=N2}" Width="*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontWeight" Value="Medium"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Profit, Converter={StaticResource ZeroToVisibilityConverter}}" Value="Visible">
+                                                                <Setter Property="Foreground" Value="Green"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    
+                                    <TextBlock Text="No open positions"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,20,0,0"
+                                              Opacity="0.5"
+                                              FontStyle="Italic">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Positions.Count}" Value="0">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </materialDesign:Card>
+                            
+                            <!-- Setup Instructions Card -->
                             <materialDesign:Card Padding="20" Background="{DynamicResource MaterialDesignPaper}"
                                                materialDesign:ElevationAssist.Elevation="Dp2">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                                        <materialDesign:PackIcon Kind="Rocket" 
+                                        <materialDesign:PackIcon Kind="InformationOutline" 
                                                                 Width="24"
                                                                 Height="24"
-                                                                Foreground="{DynamicResource SecondaryHueMidBrush}"
+                                                                Foreground="{DynamicResource PrimaryHueMidBrush}"
                                                                 VerticalAlignment="Center"
                                                                 Margin="0,0,10,0"/>
-                                        <TextBlock Text="Coming Soon in v2.1" 
-                                                  FontSize="18" 
+                                        <TextBlock Text="How to Connect MT5" 
+                                                  FontSize="16" 
                                                   FontWeight="SemiBold"
                                                   VerticalAlignment="Center"/>
                                     </StackPanel>
                                     
-                                    <TextBlock Text="Real-time EA control via HTTP bridge"
-                                              FontWeight="Medium"
-                                              FontSize="14"
-                                              Margin="0,0,0,10"/>
-                                    
-                                    <StackPanel Margin="20,0,0,0">
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                            <materialDesign:PackIcon Kind="CheckCircle" 
-                                                                    Foreground="{DynamicResource PrimaryHueMidBrush}"
-                                                                    VerticalAlignment="Center"
-                                                                    Margin="0,0,8,0"/>
-                                            <TextBlock Text="Start/stop trading with 1 click"
-                                                      Opacity="0.8"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                            <materialDesign:PackIcon Kind="CheckCircle" 
-                                                                    Foreground="{DynamicResource PrimaryHueMidBrush}"
-                                                                    VerticalAlignment="Center"
-                                                                    Margin="0,0,8,0"/>
-                                            <TextBlock Text="Live strategy parameter updates (SL/TP, lot size)"
-                                                      Opacity="0.8"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                            <materialDesign:PackIcon Kind="CheckCircle" 
-                                                                    Foreground="{DynamicResource PrimaryHueMidBrush}"
-                                                                    VerticalAlignment="Center"
-                                                                    Margin="0,0,8,0"/>
-                                            <TextBlock Text="Real-time position monitoring and PnL tracking"
-                                                      Opacity="0.8"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                            <materialDesign:PackIcon Kind="CheckCircle" 
-                                                                    Foreground="{DynamicResource PrimaryHueMidBrush}"
-                                                                    VerticalAlignment="Center"
-                                                                    Margin="0,0,8,0"/>
-                                            <TextBlock Text="Performance dashboard with charts and metrics"
-                                                      Opacity="0.8"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon Kind="CheckCircle" 
-                                                                    Foreground="{DynamicResource PrimaryHueMidBrush}"
-                                                                    VerticalAlignment="Center"
-                                                                    Margin="0,0,8,0"/>
-                                            <TextBlock Text="Emergency stop button (close all positions instantly)"
-                                                      Opacity="0.8"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                    
-                                    <Border Background="{DynamicResource MaterialDesignDivider}"
-                                           Height="1"
-                                           Margin="0,20,0,15"/>
-                                    
-                                    <TextBlock Text="This tab will transform Akhen Trader Elite into a full EA controller, allowing you to manage live trading directly from this interface without opening MetaTrader 5."
-                                              TextWrapping="Wrap"
-                                              Opacity="0.7"
-                                              FontSize="12"
-                                              FontStyle="Italic"/>
+                                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                                        <Run Text="1." FontWeight="Bold"/> 
+                                        <Run Text="Click 'START SERVER' button above"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="2." FontWeight="Bold"/>
+                                        <Run Text="In MT5: Tools → Options → Expert Advisors"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="3." FontWeight="Bold"/>
+                                        <Run Text="Enable 'Allow WebRequest for listed URL:'"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="4." FontWeight="Bold"/>
+                                        <Run Text="Add URL: http://localhost:8080"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="5." FontWeight="Bold"/>
+                                        <Run Text="Compile and attach "/>
+                                        <Run Text="Templates/AkhenTraderBridge.mq5" FontFamily="Consolas" FontSize="11"/>
+                                        <Run Text=" to any chart"/>
+                                        <LineBreak/><LineBreak/>
+                                        <Run Text="6." FontWeight="Bold"/>
+                                        <Run Text="Connection should show 'Connected' within 5 seconds!"/>
+                                    </TextBlock>
                                 </StackPanel>
                             </materialDesign:Card>
                         </StackPanel>

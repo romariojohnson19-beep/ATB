@@ -90,6 +90,12 @@ namespace AkhenTraderElite.ViewModels
         private int selectedTabIndex = 0;
 
         /// <summary>
+        /// Bridge ViewModel for EA Control tab
+        /// </summary>
+        [ObservableProperty]
+        private BridgeViewModel bridgeViewModel = new();
+
+        /// <summary>
         /// Snackbar message queue for notifications
         /// </summary>
         public ISnackbarMessageQueue SnackbarMessageQueue { get; }
