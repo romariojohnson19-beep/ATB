@@ -10,7 +10,7 @@
 #property strict
 
 //--- Input parameters
-input string    BridgeServerURL = "http://localhost:8080";  // Bridge Server URL
+input string    BridgeServerURL = "http://127.0.0.1:8080";  // Bridge Server URL (use IP instead of localhost)
 input int       HeartbeatInterval = 5;                       // Heartbeat interval (seconds)
 input int       UpdateInterval = 2;                          // Status update interval (seconds)
 input bool      EnableWebRequests = true;                    // Enable WebRequests
