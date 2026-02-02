@@ -34,24 +34,27 @@ int OnInit()
     Print("Bridge Server: ", BridgeServerURL);
     Print("Heartbeat Interval: ", HeartbeatInterval, " seconds");
     Print("Magic Number: ", MagicNumber);
+    Print("=================================================");
     
-    // Check if WebRequests are allowed
-    if(!TerminalInfoInteger(TERMINAL_WEBSOCKETS_ENABLED))
-    {
-        Alert("WebRequests are not enabled! Go to Tools -> Options -> Expert Advisors -> Allow WebRequests");
-        Alert("Add URL: ", BridgeServerURL);
-        return INIT_FAILED;
-    }
+    // Note: Make sure WebRequests are enabled in MT5!
+    // Go to: Tools -> Options -> Expert Advisors -> Allow WebRequests
+    // Add URL: ", BridgeServerURL
     
     // Send initial connection message
     if(SendHeartbeat())
     {
-        Print("? Successfully connected to Akhen Trader Elite!");
+        Print("SUCCESS: Connected to Akhen Trader Elite!");
         g_isConnected = true;
     }
     else
     {
-        Print("? Failed to connect to Akhen Trader Elite. Make sure the app is running.");
+        Print("WARNING: Failed to connect to Akhen Trader Elite.");
+        Print("Make sure:");
+        Print("1. The WPF app is running");
+        Print("2. Bridge server is started (click START SERVER in EA Control tab)");
+        Print("3. WebRequests are enabled in MT5 Options");
+        Print("4. URL is whitelisted: ", BridgeServerURL);
+        // Don't fail initialization - just try again on next tick
     }
     
     return INIT_SUCCEEDED;
@@ -108,10 +111,23 @@ bool SendHeartbeat()
         g_isConnected = true;
         return true;
     }
+    else if(res == -1)
+    {
+        // WebRequest error - likely not whitelisted or disabled
+        int error = GetLastError();
+        g_lastError = "WebRequest error: " + IntegerToString(error);
+        if(error == 4060) // ERR_FUNCTION_NOT_ALLOWED
+        {
+            Print("ERROR: WebRequest not allowed! Add URL to whitelist: ", BridgeServerURL);
+            Print("Go to: Tools -> Options -> Expert Advisors -> Allow WebRequest for listed URL");
+        }
+        g_isConnected = false;
+        return false;
+    }
     else
     {
         g_isConnected = false;
-        g_lastError = "Heartbeat failed: " + IntegerToString(res);
+        g_lastError = "HTTP error: " + IntegerToString(res);
         return false;
     }
 }
